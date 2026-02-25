@@ -1,12 +1,10 @@
 package main
 
 import (
-	"context"
 	"log"
 	"os"
 	"path/filepath"
 
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
@@ -19,21 +17,20 @@ func main() {
 		panic(err)
 	}
 
-	// list all namespaces
-	val, _ := client.CoreV1().Namespaces().List(context.Background(), metav1.ListOptions{})
-	log.Printf("Namespaces: %v", val.Items)
+	log.Println("Successfully created Kubernetes clientset")
 
-	for _, ns := range val.Items {
-		log.Printf("Namespace: %s", ns.Name)
-		log.Printf("Status: %s", &ns.Status.Phase)
-		pods, _ := client.CoreV1().Pods(ns.Name).List(context.Background(), metav1.ListOptions{})
-		for _, pod := range pods.Items {
-			log.Printf("Pod: %s, Status: %s", pod.Name, pod.Status.Phase)
-		}
+	// create scanner with rules
+	scanner := Scanner{
+		Rules: []Rule{
+			CheckLatestTag{},
+		},
 	}
 
-	// for each namespace, list all pods
-	// for each pod, print its name and status
+	// run scanner
+	findings := scanner.Scan(client)
+	for _, finding := range findings {
+		log.Printf("ID: %s, Description: %s, Severity: %s", finding.ID, finding.Description, finding.Severity)
+	}
 
 }
 
