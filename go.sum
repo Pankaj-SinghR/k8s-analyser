@@ -1,0 +1,4 @@
+k8s.io/client-go v0.36.0 h1:pOYi7C4RHChYjMiHpZSpSbIM6ZxVbRXBy7CuiIwqA3c=
+k8s.io/client-go v0.36.0/go.mod h1:ZKKcpwF0aLYfkHFCjillCKaTK/yBkEDHTDXCFY6AS9Y=
+k8s.io/metrics v0.36.0 h1:VF41Mv9ZWKKQ4jEiJ0n3Tp6jdyO+oM6dbKcJn6Y/DVg=
+k8s.io/metrics v0.36.0/go.mod h1:FY1dgPJZqnSfnOYbVdBEdRNUdy0n1nUCU6yxSMUrVG4=
