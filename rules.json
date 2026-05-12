@@ -38,5 +38,29 @@
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_6": {
+        "rule_id": "CKV_K8S_6",
+        "rule_name": "Host IPC enabled",
+        "description": "Host IPC namespace can pose security risks. It is recommended to avoid using host IPC namespace unless absolutely necessary.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_7": {
+        "rule_id": "CKV_K8S_7",
+        "rule_name": "AllowPrivilegeEscalation enabled",
+        "description": "AllowPrivilegeEscalation can pose security risks. It is recommended to set AllowPrivilegeEscalation to false unless absolutely necessary.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_8": {
+        "rule_id": "CKV_K8S_8",
+        "rule_name": "Container running in privileged security context",
+        "description": "Running containers in a privileged security context can pose security risks. It is recommended to avoid using privileged security contexts unless absolutely necessary.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }
