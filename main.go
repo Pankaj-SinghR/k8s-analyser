@@ -25,6 +25,7 @@ func main() {
 			MapRuleWithJSON()["CKV_K8S_3"],
 			MapRuleWithJSON()["CKV_K8S_4"],
 			MapRuleWithJSON()["CKV_K8S_5"],
+			MapRuleWithJSON()["CKV_K8S_6"],
 		},
 	}
 
