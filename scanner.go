@@ -6,11 +6,14 @@ type Scanner struct {
 	Rules []Rule
 }
 
-func (s *Scanner) Scan(client *kubernetes.Clientset) []Finding {
+func (s *Scanner) Scan(client *kubernetes.Clientset) ([]Finding, error) {
 	var findings []Finding
 	for _, rule := range s.Rules {
-		ruleFindings := rule.Check(client)
+		ruleFindings, err := rule.Check(client)
+		if err != nil {
+			return nil, err
+		}
 		findings = append(findings, ruleFindings...)
 	}
-	return findings
+	return findings, nil
 }

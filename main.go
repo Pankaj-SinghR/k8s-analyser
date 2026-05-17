@@ -27,11 +27,15 @@ func main() {
 	}
 
 	// run scanner
-	findings := scanner.Scan(client)
+	findings, err := scanner.Scan(client)
+
+	if err != nil {
+		println("Error running scanner:", err.Error())
+	}
+
 	for _, finding := range findings {
 		log.Printf("ID: %s, Description: %s, Severity: %s", finding.ID, finding.Description, finding.Severity)
 	}
-
 }
 
 func NewClientset() (*kubernetes.Clientset, error) {
