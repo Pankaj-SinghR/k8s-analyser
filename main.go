@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 
+	"github.com/Pankaj-SinghR/k8s-analyser/rules"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 )
@@ -21,8 +23,9 @@ func main() {
 
 	// create scanner with rules
 	scanner := Scanner{
-		Rules: []Rule{
-			CheckLatestTag{},
+		Rules: []rules.Rule{
+			rules.CheckLatestTag{},
+			&rules.ContainerRunningRoot{},
 		},
 	}
 
@@ -34,7 +37,7 @@ func main() {
 	}
 
 	for _, finding := range findings {
-		log.Printf("ID: %s, Description: %s, Severity: %s", finding.ID, finding.Description, finding.Severity)
+		fmt.Printf("ID: %s, Description: %s, Severity: %s, Resource: %s \n", finding.ID, finding.Description, finding.Severity, finding.Resource)
 	}
 }
 
