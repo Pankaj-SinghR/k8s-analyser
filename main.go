@@ -20,9 +20,9 @@ func main() {
 	// create scanner with rules
 	scanner := Scanner{
 		Rules: []rules.Rule{
-			rules.CheckLatestTag{},
-			rules.ContainerRunningRoot{},
-			rules.CheckPrivilegedContainer{},
+			MapRuleWithJSON()["CKV_K8S_1"],
+			MapRuleWithJSON()["CKV_K8S_2"],
+			MapRuleWithJSON()["CKV_K8S_3"],
 		},
 	}
 

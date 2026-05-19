@@ -8,18 +8,18 @@ import (
 	"k8s.io/client-go/kubernetes"
 )
 
-type CheckPrivilegedContainer struct{}
-
-func (c CheckPrivilegedContainer) ID() string {
-	return "CKV_K8S_3"
+type CheckPrivilegedContainer struct {
+	RuleInfo
 }
 
-func (c CheckPrivilegedContainer) Description() string {
-	return "Running containers with privileged access can pose security risks, as it grants the container elevated permissions on the host system. \n NOTE: Some containers may require privileged access eg: kube-proxy cuz it's kubenetes component."
+func (c CheckPrivilegedContainer) Info() RuleInfo {
+	return c.RuleInfo
 }
 
-func (c CheckPrivilegedContainer) Severity() Severity {
-	return High
+func NewCheckPrivilegedContainer(info RuleInfo) CheckPrivilegedContainer {
+	return CheckPrivilegedContainer{
+		RuleInfo: info,
+	}
 }
 
 // recommendation is to use how to fix the issue, for example, if the rule is about using 'latest' tag,
@@ -38,10 +38,6 @@ func (c CheckPrivilegedContainer) Recommendation() string {
 	 securityContext:
 	   privileged: false`)
 	return rr
-}
-
-func (c CheckPrivilegedContainer) Name() string {
-	return "Check for privileged containers"
 }
 
 func (c CheckPrivilegedContainer) Check(client *kubernetes.Clientset) ([]Finding, error) {
@@ -63,9 +59,9 @@ func (c CheckPrivilegedContainer) Check(client *kubernetes.Clientset) ([]Finding
 			for _, container := range pod.Spec.Containers {
 				if container.SecurityContext != nil && container.SecurityContext.Privileged != nil && *container.SecurityContext.Privileged == true {
 					found := Finding{
-						ID:          c.ID(),
-						Description: c.Description(),
-						Severity:    c.Severity(),
+						ID:          c.ID,
+						Description: c.Description,
+						Severity:    c.Severity,
 						Resource:    pod.Name + " in namespace " + ns.Name,
 					}
 					findings = append(findings, found)

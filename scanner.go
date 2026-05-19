@@ -16,15 +16,16 @@ func (s *Scanner) Scan(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	fmt.Println("Findings")
 	for _, rule := range s.Rules {
 		ruleFindings, err := rule.Check(client)
+		info := rule.Info()
 		if err != nil {
 			return nil, err
 		}
 		fmt.Println("════════════════════════════════════════")
 		fmt.Printf("\n")
-		fmt.Printf("[%s] %s\n", rule.Severity(), rule.ID())
+		fmt.Printf("[%s] %s\n", info.Severity, info.ID)
 		fmt.Printf("────────────────────────────────────────\n")
-		fmt.Printf("Rule		: %s\n", rule.Name())
-		fmt.Printf("Description	: %s\n", rule.Description())
+		fmt.Printf("Rule		: %s\n", info.Name)
+		fmt.Printf("Description	: %s\n", info.Description)
 		fmt.Printf("\n")
 		fmt.Println("Affected Resources:")
 		for _, finding := range ruleFindings {

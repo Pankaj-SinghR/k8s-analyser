@@ -18,10 +18,15 @@ type Finding struct {
 }
 
 type Rule interface {
-	ID() string
-	Description() string
-	Severity() Severity
+	Info() RuleInfo
 	Recommendation() string
-	Name() string
 	Check(*kubernetes.Clientset) ([]Finding, error)
+}
+
+type RuleInfo struct {
+	ID             string   `json:"rule_id"`
+	Description    string   `json:"description"`
+	Severity       Severity `json:"severity"`
+	Recommendation string   `json:"recommendation"`
+	Name           string   `json:"rule_name"`
 }

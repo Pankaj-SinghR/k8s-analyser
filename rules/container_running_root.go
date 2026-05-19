@@ -9,18 +9,17 @@ import (
 )
 
 type ContainerRunningRoot struct {
+	RuleInfo
 }
 
-func (c ContainerRunningRoot) ID() string {
-	return "CKV_K8S_2"
+func (c ContainerRunningRoot) Info() RuleInfo {
+	return c.RuleInfo
 }
 
-func (c ContainerRunningRoot) Description() string {
-	return "Running containers as root can pose security risks. It is recommended to run containers with a non-root user."
-}
-
-func (c ContainerRunningRoot) Severity() Severity {
-	return High
+func NewContainerRunningRoot(rule RuleInfo) ContainerRunningRoot {
+	return ContainerRunningRoot{
+		RuleInfo: rule,
+	}
 }
 
 func (c ContainerRunningRoot) Recommendation() string {
@@ -32,10 +31,6 @@ func (c ContainerRunningRoot) Recommendation() string {
   securityContext:
    runAsNonRoot: true`)
 	return rr
-}
-
-func (r ContainerRunningRoot) Name() string {
-	return "Container Running as Root"
 }
 
 func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, error) {
@@ -58,9 +53,9 @@ func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, er
 			for _, container := range pod.Spec.Containers {
 				if container.SecurityContext != nil && (container.SecurityContext.RunAsUser == nil || *container.SecurityContext.RunAsUser == 0) {
 					found := Finding{
-						ID:          r.ID(),
-						Description: r.Description(),
-						Severity:    r.Severity(),
+						ID:          r.ID,
+						Description: r.Description,
+						Severity:    r.Severity,
 						Resource:    pod.Name + " in namespace " + ns.Name,
 					}
 					findings = append(findings, found)
