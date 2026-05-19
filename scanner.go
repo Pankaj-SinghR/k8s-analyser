@@ -16,6 +16,17 @@ func (s *Scanner) Scan(client *kubernetes.Clientset) ([]rules.Finding, error) {
 		if err != nil {
 			return nil, err
 		}
+		// print rule finding in a readable format
+		println("--------------------------------------")
+		println("Rule:", rule.Name())
+		println("--------------------------------------")
+		for _, finding := range ruleFindings {
+			println("ID:", finding.ID)
+			println("Description:", finding.Description)
+			println("Severity:", finding.Severity)
+			println("Resource:", finding.Resource)
+			println("--------------------------------------")
+		}
 		findings = append(findings, ruleFindings...)
 	}
 	return findings, nil

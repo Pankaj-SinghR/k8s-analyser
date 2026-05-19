@@ -18,6 +18,7 @@ func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]Finding, error) {
 	// get all namespaces, then get all pods in each namespace, and check if any container is using 'latest' tag
 	// use pagination to get all namespaces and pods if there are many
 	namespace, err := client.CoreV1().Namespaces().List(context.Background(), v1.ListOptions{})
+	var findings []Finding
 
 	if err != nil {
 		return nil, err
@@ -33,18 +34,17 @@ func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]Finding, error) {
 		for _, pod := range pods.Items {
 			for _, container := range pod.Spec.Containers {
 				if container.Image != "" && strings.Split(container.Image, ":")[1] == "latest" {
-					return []Finding{
-						{
-							ID:          "CKV_K8S_1",
-							Description: "Using 'latest' tag in container image is not recommended as it can lead to unpredictable deployments.",
-							Severity:    "HIGH",
-							Resource:    pod.Name + " in namespace " + ns.Name,
-						},
-					}, nil
+					found := Finding{
+						ID:          "CKV_K8S_1",
+						Description: "Using 'latest' tag in container image is not recommended as it can lead to unpredictable deployments.",
+						Severity:    "HIGH",
+						Resource:    pod.Name + " in namespace " + ns.Name,
+					}
+					findings = append(findings, found)
 				}
 			}
 		}
 	}
 
-	return nil, nil
+	return findings, nil
 }
