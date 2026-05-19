@@ -5,11 +5,11 @@ import "k8s.io/client-go/kubernetes"
 type ContainerRunningRoot struct {
 }
 
-func (r *ContainerRunningRoot) Name() string {
+func (r ContainerRunningRoot) Name() string {
 	return "Container Running as Root"
 }
 
-func (r *ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, error) {
+func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, error) {
 	return []Finding{
 		{
 			ID:          "CKV_K8S_2",

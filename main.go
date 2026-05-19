@@ -25,7 +25,7 @@ func main() {
 	scanner := Scanner{
 		Rules: []rules.Rule{
 			rules.CheckLatestTag{},
-			&rules.ContainerRunningRoot{},
+			rules.ContainerRunningRoot{},
 		},
 	}
 
