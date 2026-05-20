@@ -23,6 +23,7 @@ func main() {
 			MapRuleWithJSON()["CKV_K8S_1"],
 			MapRuleWithJSON()["CKV_K8S_2"],
 			MapRuleWithJSON()["CKV_K8S_3"],
+			MapRuleWithJSON()["CKV_K8S_4"],
 		},
 	}
 

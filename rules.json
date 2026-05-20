@@ -22,5 +22,13 @@
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_4": {
+        "rule_id": "CKV_K8S_4",
+        "rule_name": "Check for Host network enabled",
+        "description": "Enabling host networking can pose security risks. It is recommended to avoid using host networking unless absolutely necessary.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }
