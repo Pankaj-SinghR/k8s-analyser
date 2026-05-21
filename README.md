@@ -1,8 +1,8 @@
-# k8s-misconfig-finder
+# k8s-guardian
 
-A lightweight Kubernetes misconfiguration detection CLI for identifying dangerous security, reliability, and operational issues in live Kubernetes clusters.
+A lightweight Kubernetes security and reliability analysis CLI for identifying dangerous infrastructure risks, unsafe workload configurations, and operational anti-patterns in live Kubernetes clusters.
 
-The tool connects directly to the cluster using the current kubeconfig context and scans workloads such as Pods, Deployments, and StatefulSets for common infrastructure and security anti-patterns.
+The tool connects directly to the cluster using the current kubeconfig context and scans workloads such as Pods, Deployments, and StatefulSets to detect security weaknesses, reliability concerns, and Kubernetes best-practice violations.
 
 ---
 
@@ -55,15 +55,15 @@ k8s-scan cluster
 ### Example Output
 
 ```text
-[HIGH] payments-api
+[HIGH]
 - Container running as root
 - Privileged mode enabled
 
-[MEDIUM] auth-service
+[MEDIUM]
 - Missing memory limits
 - Missing readiness probe
 
-[LOW] nginx
+[LOW]
 - Running in default namespace
 ```
 
@@ -88,7 +88,6 @@ CLI Output
 ## Tech Stack
 
 - Golang
-- Cobra CLI
 - Kubernetes client-go
 - Kubernetes API
 
@@ -99,8 +98,8 @@ CLI Output
 ### MVP
 
 - [x] Connect to Kubernetes cluster
-- [ ] Scan Pods and Deployments
-- [ ] Detect common misconfigurations
+- [x] Scan Pods and Deployments
+- [x] Detect common misconfigurations
 - [ ] Severity-based findings
 - [ ] CLI output formatting
 
@@ -117,9 +116,9 @@ CLI Output
 
 ## Why This Project?
 
-Kubernetes clusters often contain dangerous or inefficient configurations that are difficult to identify manually.
+Kubernetes clusters often contain unsafe or inefficient configurations that are difficult to identify manually.
 
-This project focuses on providing a simple, developer-friendly auditing tool to help platform and DevOps engineers quickly detect critical infrastructure misconfigurations in running environments.
+This project provides a lightweight CLI to help engineers quickly detect security, reliability, and operational issues in running Kubernetes environments.
 
 ---
 
