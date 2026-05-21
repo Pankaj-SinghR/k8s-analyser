@@ -1,4 +1,4 @@
-# k8s-guardian
+# k8s-analyser
 
 A lightweight Kubernetes security and reliability analysis CLI for identifying dangerous infrastructure risks, unsafe workload configurations, and operational anti-patterns in live Kubernetes clusters.
 
@@ -49,7 +49,7 @@ The tool connects directly to the cluster using the current kubeconfig context a
 ### Scan Entire Cluster
 
 ```bash
-k8s-scan cluster
+k8s-analyser cluster
 ```
 
 ### Example Output
