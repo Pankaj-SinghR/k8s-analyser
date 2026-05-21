@@ -17,7 +17,7 @@ The tool connects directly to the cluster using the current kubeconfig context a
 
 ---
 
-## Misconfigurations Detected
+## Misconfigurations Covered
 
 ### Security
 
