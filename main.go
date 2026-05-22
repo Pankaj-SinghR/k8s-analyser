@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -19,8 +17,6 @@ func main() {
 		panic(err)
 	}
 
-	log.Println("Successfully created Kubernetes clientset")
-
 	// create scanner with rules
 	scanner := Scanner{
 		Rules: []rules.Rule{
@@ -30,14 +26,10 @@ func main() {
 	}
 
 	// run scanner
-	findings, err := scanner.Scan(client)
+	_, err = scanner.Scan(client)
 
 	if err != nil {
 		println("Error running scanner:", err.Error())
-	}
-
-	for _, finding := range findings {
-		fmt.Printf("ID: %s, Description: %s, Severity: %s, Resource: %s \n", finding.ID, finding.Description, finding.Severity, finding.Resource)
 	}
 }
 
