@@ -2,12 +2,36 @@ package rules
 
 import (
 	"context"
+	"fmt"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 type ContainerRunningRoot struct {
+}
+
+func (c ContainerRunningRoot) ID() string {
+	return "CKV_K8S_2"
+}
+
+func (c ContainerRunningRoot) Description() string {
+	return "Running containers as root can pose security risks. It is recommended to run containers with a non-root user."
+}
+
+func (c ContainerRunningRoot) Severity() Severity {
+	return High
+}
+
+func (c ContainerRunningRoot) Recommendation() string {
+	//   Set:
+	// securityContext:
+	//   runAsNonRoot: true
+	rr := fmt.Sprintf(`Set the securityContext for the container to run as a non-root user.
+ Example:
+  securityContext:
+   runAsNonRoot: true`)
+	return rr
 }
 
 func (r ContainerRunningRoot) Name() string {
@@ -34,9 +58,9 @@ func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, er
 			for _, container := range pod.Spec.Containers {
 				if container.SecurityContext != nil && (container.SecurityContext.RunAsUser == nil || *container.SecurityContext.RunAsUser == 0) {
 					found := Finding{
-						ID:          "CKV_K8S_2",
-						Description: "Running containers as root can pose security risks. It is recommended to run containers with a non-root user.",
-						Severity:    "HIGH",
+						ID:          r.ID(),
+						Description: r.Description(),
+						Severity:    r.Severity(),
 						Resource:    pod.Name + " in namespace " + ns.Name,
 					}
 					findings = append(findings, found)

@@ -2,6 +2,7 @@ package rules
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -9,6 +10,26 @@ import (
 )
 
 type CheckLatestTag struct{}
+
+func (c CheckLatestTag) ID() string {
+	return "CKV_K8S_1"
+}
+
+func (c CheckLatestTag) Description() string {
+	return "Using 'latest' tag in container image is not recommended as it can lead to unpredictable deployments."
+}
+
+func (c CheckLatestTag) Severity() Severity {
+	return High
+}
+
+// recommendation is to use how to fix the issue, for example, if the rule is about using 'latest' tag,
+// then the recommendation would be to use a specific tag instead of 'latest'
+func (c CheckLatestTag) Recommendation() string {
+	rr := fmt.Sprintf(`Use a fixed image tag instead of 'latest'
+ Example: nginx:1.27.1`)
+	return rr
+}
 
 func (c CheckLatestTag) Name() string {
 	return "Check for latest tag usage"
@@ -35,9 +56,9 @@ func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]Finding, error) {
 			for _, container := range pod.Spec.Containers {
 				if container.Image != "" && strings.Split(container.Image, ":")[1] == "latest" {
 					found := Finding{
-						ID:          "CKV_K8S_1",
-						Description: "Using 'latest' tag in container image is not recommended as it can lead to unpredictable deployments.",
-						Severity:    "HIGH",
+						ID:          c.ID(),
+						Description: c.Description(),
+						Severity:    c.Severity(),
 						Resource:    pod.Name + " in namespace " + ns.Name,
 					}
 					findings = append(findings, found)
