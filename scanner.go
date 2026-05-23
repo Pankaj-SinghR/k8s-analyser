@@ -16,10 +16,13 @@ func (s *Scanner) Scan(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	fmt.Println("Findings")
 	for _, rule := range s.Rules {
 		ruleFindings, err := rule.Check(client)
-		info := rule.Info()
 		if err != nil {
 			return nil, err
 		}
+		// if len(ruleFindings) == 0 {
+		// 	continue
+		// }
+		info := rule.Info()
 		fmt.Println("════════════════════════════════════════")
 		fmt.Printf("\n")
 		fmt.Printf("[%s] %s\n", info.Severity, info.ID)
