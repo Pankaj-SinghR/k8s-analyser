@@ -22,6 +22,7 @@ func main() {
 		Rules: []rules.Rule{
 			rules.CheckLatestTag{},
 			rules.ContainerRunningRoot{},
+			rules.CheckPrivilegedContainer{},
 		},
 	}
 
