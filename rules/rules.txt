@@ -1,0 +1,47 @@
+HIGH SEVERITY
+--------------
+
+- Container running as root
+- Privileged container enabled
+- Host network enabled
+- Host PID enabled
+- Host IPC enabled
+- AllowPrivilegeEscalation enabled
+- Image uses :latest tag
+- Container running in privileged security context
+- Read-only root filesystem disabled
+- AutomountServiceAccountToken enabled
+- HostPath volume mounted
+- Capabilities added manually (NET_ADMIN, SYS_ADMIN, etc.)
+
+MEDIUM SEVERITY
+----------------
+
+- Missing CPU limits
+- Missing memory limits
+- Missing CPU requests
+- Missing memory requests
+- Missing liveness probe
+- Missing readiness probe
+- ImagePullPolicy Always with latest tag
+- Single replica deployment
+- No pod anti-affinity configured
+- No securityContext defined
+- No resource section defined
+- Containers without health checks
+- Deployment without rolling update strategy
+
+LOW SEVERITY
+-------------
+
+- Running in default namespace
+- Missing labels
+- Missing annotations
+- Mutable image tags
+- Latest tag without digest
+- Namespace missing resource quota
+- Namespace missing limit range
+- Missing owner/team metadata
+- Missing environment labels
+- Missing app/version labels
+- Using default service account
