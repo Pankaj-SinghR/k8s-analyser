@@ -70,5 +70,13 @@
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_10": {
+        "rule_id": "CKV_K8S_10",
+        "rule_name": "Read-only root filesystem disabled",
+        "description": "Running containers with a read-only root filesystem can enhance security by preventing unauthorized modifications to the container's filesystem. It is recommended to set the root filesystem to read-only unless the application requires write access.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }
