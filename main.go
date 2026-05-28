@@ -20,15 +20,15 @@ func main() {
 	// create scanner with rules
 	scanner := Scanner{
 		Rules: []rules.Rule{
-			// MapRuleWithJSON()["CKV_K8S_1"],
-			// MapRuleWithJSON()["CKV_K8S_2"],
-			// MapRuleWithJSON()["CKV_K8S_3"],
-			// MapRuleWithJSON()["CKV_K8S_4"],
-			// MapRuleWithJSON()["CKV_K8S_5"],
-			// MapRuleWithJSON()["CKV_K8S_6"],
-			// MapRuleWithJSON()["CKV_K8S_7"],
-			// MapRuleWithJSON()["CKV_K8S_8"],
-			// MapRuleWithJSON()["CKV_K8S_9"],
+			MapRuleWithJSON()["CKV_K8S_1"],
+			MapRuleWithJSON()["CKV_K8S_2"],
+			MapRuleWithJSON()["CKV_K8S_3"],
+			MapRuleWithJSON()["CKV_K8S_4"],
+			MapRuleWithJSON()["CKV_K8S_5"],
+			MapRuleWithJSON()["CKV_K8S_6"],
+			MapRuleWithJSON()["CKV_K8S_7"],
+			MapRuleWithJSON()["CKV_K8S_8"],
+			MapRuleWithJSON()["CKV_K8S_9"],
 			MapRuleWithJSON()["CKV_K8S_10"],
 		},
 	}
