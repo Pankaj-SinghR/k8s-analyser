@@ -1,22 +1,23 @@
-package rules
+package k8s
 
 import (
 	"context"
 	"fmt"
 
+	"github.com/Pankaj-SinghR/k8s-analyser/rules"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 type ContainerRunningRoot struct {
-	RuleInfo
+	rules.RuleInfo
 }
 
-func (c ContainerRunningRoot) Info() RuleInfo {
+func (c ContainerRunningRoot) Info() rules.RuleInfo {
 	return c.RuleInfo
 }
 
-func NewContainerRunningRoot(rule RuleInfo) ContainerRunningRoot {
+func NewContainerRunningRoot(rule rules.RuleInfo) ContainerRunningRoot {
 	return ContainerRunningRoot{
 		RuleInfo: rule,
 	}
@@ -33,7 +34,7 @@ func (c ContainerRunningRoot) Recommendation() string {
 	return rr
 }
 
-func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, error) {
+func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	// check all namespaces, then check all pods in each namespace, and check if any container is running as root
 	// securityContext.RunAsUser is 0 or nil (default is 0) means running as root
 
@@ -42,7 +43,7 @@ func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, er
 		return nil, err
 	}
 
-	var findings []Finding
+	var findings []rules.Finding
 
 	for _, ns := range namespace.Items {
 		pods, err := client.CoreV1().Pods(ns.Name).List(context.Background(), v1.ListOptions{})
@@ -52,7 +53,7 @@ func (r ContainerRunningRoot) Check(client *kubernetes.Clientset) ([]Finding, er
 		for _, pod := range pods.Items {
 			for _, container := range pod.Spec.Containers {
 				if container.SecurityContext != nil && (container.SecurityContext.RunAsUser == nil || *container.SecurityContext.RunAsUser == 0) {
-					found := Finding{
+					found := rules.Finding{
 						ID:          r.ID,
 						Description: r.Description,
 						Severity:    r.Severity,

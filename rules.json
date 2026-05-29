@@ -1,7 +1,7 @@
 {
     "CKV_K8S_1": {
         "rule_id": "CKV_K8S_1",
-        "rule_name": "Check for latest tag usage",
+        "rule_name": "Using 'latest' tag for container images",
         "description": "Using the 'latest' tag for container images can lead to unpredictable behavior and potential security risks. It is recommended to specify a specific version or tag for container images.",
         "severity": "HIGH",
         "category": "Best Practices",
@@ -9,7 +9,7 @@
     },
     "CKV_K8S_2": {
         "rule_id": "CKV_K8S_2",
-        "rule_name": "Check for privileged containers",
+        "rule_name": "Containers running in privileged mode",
         "description": "Running containers in privileged mode can pose security risks. It is recommended to avoid using privileged containers unless absolutely necessary.",
         "severity": "HIGH",
         "category": "Security",
@@ -17,7 +17,7 @@
     },
     "CKV_K8S_3": {
         "rule_id": "CKV_K8S_3",
-        "rule_name": "Check for containers running as root",
+        "rule_name": "Containers running as root",
         "description": "Running containers as root can pose security risks. It is recommended to run containers with a non-root user whenever possible.",
         "severity": "HIGH",
         "category": "Security",
@@ -25,8 +25,16 @@
     },
     "CKV_K8S_4": {
         "rule_id": "CKV_K8S_4",
-        "rule_name": "Check for Host network enabled",
+        "rule_name": "Host network enabled",
         "description": "Enabling host networking can pose security risks. It is recommended to avoid using host networking unless absolutely necessary.",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_5": {
+        "rule_id": "CKV_K8S_5",
+        "rule_name": "Host PID enabled",
+        "description": "Host PID namespace can pose security risks. It is recommended to avoid using host PID namespace unless absolutely necessary.",
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"

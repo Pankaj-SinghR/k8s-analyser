@@ -1,23 +1,24 @@
-package rules
+package k8s
 
 import (
 	"context"
 	"fmt"
 	"strings"
 
+	"github.com/Pankaj-SinghR/k8s-analyser/rules"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 type CheckLatestTag struct {
-	RuleInfo
+	rules.RuleInfo
 }
 
-func (c CheckLatestTag) Info() RuleInfo {
+func (c CheckLatestTag) Info() rules.RuleInfo {
 	return c.RuleInfo
 }
 
-func NewCheckLatestTag(rule RuleInfo) CheckLatestTag {
+func NewCheckLatestTag(rule rules.RuleInfo) CheckLatestTag {
 	return CheckLatestTag{
 		RuleInfo: rule,
 	}
@@ -31,11 +32,11 @@ func (c CheckLatestTag) Recommendation() string {
 	return rr
 }
 
-func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]Finding, error) {
+func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	// get all namespaces, then get all pods in each namespace, and check if any container is using 'latest' tag
 	// use pagination to get all namespaces and pods if there are many
 	namespace, err := client.CoreV1().Namespaces().List(context.Background(), v1.ListOptions{})
-	var findings []Finding
+	var findings []rules.Finding
 
 	if err != nil {
 		return nil, err
@@ -51,7 +52,7 @@ func (c CheckLatestTag) Check(client *kubernetes.Clientset) ([]Finding, error) {
 		for _, pod := range pods.Items {
 			for _, container := range pod.Spec.Containers {
 				if container.Image != "" && strings.Split(container.Image, ":")[1] == "latest" {
-					found := Finding{
+					found := rules.Finding{
 						ID:          c.ID,
 						Description: c.Description,
 						Severity:    c.Severity,

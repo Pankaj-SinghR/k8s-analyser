@@ -1,23 +1,24 @@
-package rules
+package k8s
 
 import (
 	"context"
 
+	"github.com/Pankaj-SinghR/k8s-analyser/rules"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 type HostNetworkEnable struct {
-	RuleInfo
+	rules.RuleInfo
 }
 
-func NewHostNetworkEnable(info RuleInfo) HostNetworkEnable {
+func NewHostNetworkEnable(info rules.RuleInfo) HostNetworkEnable {
 	return HostNetworkEnable{
 		RuleInfo: info,
 	}
 }
 
-func (r HostNetworkEnable) Info() RuleInfo {
+func (r HostNetworkEnable) Info() rules.RuleInfo {
 	return r.RuleInfo
 }
 
@@ -37,9 +38,9 @@ func (r HostNetworkEnable) Recommendation() string {
 `
 }
 
-func (r HostNetworkEnable) Check(client *kubernetes.Clientset) ([]Finding, error) {
+func (r HostNetworkEnable) Check(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	namespace, err := client.CoreV1().Namespaces().List(context.Background(), v1.ListOptions{})
-	var findings []Finding
+	var findings []rules.Finding
 
 	if err != nil {
 		return nil, err
@@ -54,7 +55,7 @@ func (r HostNetworkEnable) Check(client *kubernetes.Clientset) ([]Finding, error
 
 		for _, pod := range pods.Items {
 			if pod.Spec.HostNetwork {
-				findings = append(findings, Finding{
+				findings = append(findings, rules.Finding{
 					ID:          r.ID,
 					Description: r.Description,
 					Severity:    r.Severity,

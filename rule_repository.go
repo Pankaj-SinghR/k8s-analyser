@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/Pankaj-SinghR/k8s-analyser/rules"
+	"github.com/Pankaj-SinghR/k8s-analyser/rules/k8s"
 )
 
 func init() {
@@ -26,9 +27,9 @@ func MapRuleWithJSON() map[string]rules.Rule {
 	}
 
 	return map[string]rules.Rule{
-		"CKV_K8S_1": rules.NewCheckLatestTag(rulesMap["CKV_K8S_1"]),
-		"CKV_K8S_2": rules.NewContainerRunningRoot(rulesMap["CKV_K8S_2"]),
-		"CKV_K8S_3": rules.NewCheckPrivilegedContainer(rulesMap["CKV_K8S_3"]),
-		"CKV_K8S_4": rules.NewHostNetworkEnable(rulesMap["CKV_K8S_4"]),
+		"CKV_K8S_1": k8s.NewCheckLatestTag(rulesMap["CKV_K8S_1"]),
+		"CKV_K8S_2": k8s.NewContainerRunningRoot(rulesMap["CKV_K8S_2"]),
+		"CKV_K8S_3": k8s.NewCheckPrivilegedContainer(rulesMap["CKV_K8S_3"]),
+		"CKV_K8S_4": k8s.NewHostNetworkEnable(rulesMap["CKV_K8S_4"]),
 	}
 }

@@ -1,22 +1,23 @@
-package rules
+package k8s
 
 import (
 	"context"
 	"fmt"
 
+	"github.com/Pankaj-SinghR/k8s-analyser/rules"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 )
 
 type CheckPrivilegedContainer struct {
-	RuleInfo
+	rules.RuleInfo
 }
 
-func (c CheckPrivilegedContainer) Info() RuleInfo {
+func (c CheckPrivilegedContainer) Info() rules.RuleInfo {
 	return c.RuleInfo
 }
 
-func NewCheckPrivilegedContainer(info RuleInfo) CheckPrivilegedContainer {
+func NewCheckPrivilegedContainer(info rules.RuleInfo) CheckPrivilegedContainer {
 	return CheckPrivilegedContainer{
 		RuleInfo: info,
 	}
@@ -40,9 +41,9 @@ func (c CheckPrivilegedContainer) Recommendation() string {
 	return rr
 }
 
-func (c CheckPrivilegedContainer) Check(client *kubernetes.Clientset) ([]Finding, error) {
+func (c CheckPrivilegedContainer) Check(client *kubernetes.Clientset) ([]rules.Finding, error) {
 	namespace, err := client.CoreV1().Namespaces().List(context.Background(), v1.ListOptions{})
-	var findings []Finding
+	var findings []rules.Finding
 
 	if err != nil {
 		return nil, err
@@ -58,7 +59,7 @@ func (c CheckPrivilegedContainer) Check(client *kubernetes.Clientset) ([]Finding
 		for _, pod := range pods.Items {
 			for _, container := range pod.Spec.Containers {
 				if container.SecurityContext != nil && container.SecurityContext.Privileged != nil && *container.SecurityContext.Privileged == true {
-					found := Finding{
+					found := rules.Finding{
 						ID:          c.ID,
 						Description: c.Description,
 						Severity:    c.Severity,
