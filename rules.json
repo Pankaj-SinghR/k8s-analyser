@@ -57,8 +57,8 @@
     },
     "CKV_K8S_8": {
         "rule_id": "CKV_K8S_8",
-        "rule_name": "Container running in privileged security context",
-        "description": "Running containers in a privileged security context can pose security risks. It is recommended to avoid using privileged security contexts unless absolutely necessary.",
+        "rule_name": "HostPath volumes mounted",
+        "description": "HostPath volumes allow containers to mount files or directories directly from the host node filesystem. This can expose sensitive host resources and increase the risk of container escape or node compromise.",
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
