@@ -24,23 +24,19 @@ func NewAllowPrivilegeEscalation(rule rules.RuleInfo) AllowPrivilegeEscalation {
 }
 
 func (a AllowPrivilegeEscalation) Recommendation() string {
-	return `Avoid using hostIPC: true unless absolutely necessary. Using the host IPC namespace allows containers to view and interact
-with IPC resources on the host node, which can lead to privilege escalation and container breakout risks.
+	return `Disable privilege escalation in the container security context.
+ Example:
+ securityContext:
+   allowPrivilegeEscalation: false
 
-Recommendation:
-- Remove hostIPC: true from the pod spec
-- Use isolated namespaces
-- Follow the principle of least privilege
-
-Example:
-spec:
-  hostIPC: false	
+ Additionally, apply least privilege practices by:
+ - Running containers as non-root
+ - Dropping unnecessary Linux capabilities
+ - Avoiding privileged containers
 `
 }
 
 func (a AllowPrivilegeEscalation) Check(client *kubernetes.Clientset) ([]rules.Finding, error) {
-	// get all namespaces, then get all pods in each namespace, and check if any container is using 'latest' tag
-	// use pagination to get all namespaces and pods if there are many
 	namespace, err := client.CoreV1().Namespaces().List(context.Background(), v1.ListOptions{})
 	var findings []rules.Finding
 
@@ -56,14 +52,16 @@ func (a AllowPrivilegeEscalation) Check(client *kubernetes.Clientset) ([]rules.F
 		}
 
 		for _, pod := range pods.Items {
-			if pod.Spec.HostIPC {
-				finding := rules.Finding{
-					ID:          a.ID,
-					Description: a.Description,
-					Severity:    a.Severity,
-					Resource:    fmt.Sprintf("%s in Namespace %s", pod.Name, ns.Name),
+			for _, container := range pod.Spec.Containers {
+				if container.SecurityContext != nil && container.SecurityContext.AllowPrivilegeEscalation != nil && *container.SecurityContext.AllowPrivilegeEscalation {
+					finding := rules.Finding{
+						Resource:    fmt.Sprintf("%s in Namespace %s", pod.Name, ns.Name),
+						Description: a.Description,
+						ID:          a.ID,
+						Severity:    a.Severity,
+					}
+					findings = append(findings, finding)
 				}
-				findings = append(findings, finding)
 			}
 		}
 	}
