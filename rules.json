@@ -62,5 +62,13 @@
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_9": {
+        "rule_id": "CKV_K8S_9",
+        "rule_name": "AutoMountServiceAccount enabled",
+        "description": "automountServiceAccountToken enabled in Kubernetes allows Kubernetes to automatically mount service account credentials inside pods. If a container is compromised, attackers may use the exposed token to access the Kubernetes API and perform unauthorized actions based on the assigned RBAC permissions",
+        "severity": "HIGH",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }
