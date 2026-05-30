@@ -94,5 +94,21 @@
         "severity": "MEDIUM",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_13": {
+        "rule_id": "CKV_K8S_13",
+        "rule_name": "Missing CPU requests",
+        "description": "Containers without CPU requests may lead to inefficient resource scheduling and unstable workload performance. It is recommended to define CPU requests for all containers to ensure proper resource allocation.",
+        "severity": "MEDIUM",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_14": {
+        "rule_id": "CKV_K8S_14",
+        "rule_name": "Missing memory requests",
+        "description": "Containers without memory requests may lead to inefficient resource scheduling and increase the risk of resource contention. It is recommended to define memory requests for all containers to ensure predictable workload performance.",
+        "severity": "MEDIUM",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }
