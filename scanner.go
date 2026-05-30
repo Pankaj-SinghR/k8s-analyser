@@ -19,9 +19,9 @@ func (s *Scanner) Scan(client *kubernetes.Clientset) ([]rules.Finding, error) {
 		if err != nil {
 			return nil, err
 		}
-		// if len(ruleFindings) == 0 {
-		// 	continue
-		// }
+		if len(ruleFindings) == 0 {
+			continue
+		}
 		info := rule.Info()
 		fmt.Println("════════════════════════════════════════")
 		fmt.Printf("\n")
