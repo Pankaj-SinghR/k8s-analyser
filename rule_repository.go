@@ -37,5 +37,9 @@ func MapRuleWithJSON() map[string]rules.Rule {
 		"CKV_K8S_8":  k8s.NewHostPathVolume(rulesMap["CKV_K8S_8"]),
 		"CKV_K8S_9":  k8s.NewAutoMountServiceToken(rulesMap["CKV_K8S_9"]),
 		"CKV_K8S_10": k8s.NewRootOnlyRootFileSystem(rulesMap["CKV_K8S_10"]),
+		"CKV_K8S_11": k8s.NewMissingCPULimits(rulesMap["CKV_K8S_11"]),
+		"CKV_K8S_12": k8s.NewMissingMemoryLimits(rulesMap["CKV_K8S_12"]),
+		"CKV_K8S_13": k8s.NewMissingCPURequests(rulesMap["CKV_K8S_13"]),
+		"CKV_K8S_14": k8s.NewMissingMemoryRequests(rulesMap["CKV_K8S_14"]),
 	}
 }
