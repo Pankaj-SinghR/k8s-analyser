@@ -78,5 +78,21 @@
         "severity": "HIGH",
         "category": "Security",
         "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_11": {
+        "rule_id": "CKV_K8S_11",
+        "rule_name": "Missing CPU limits",
+        "description": "Containers without CPU limits can consume excessive CPU resources, potentially affecting cluster stability and other workloads. It is recommended to define CPU limits for all containers.",
+        "severity": "MEDIUM",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
+    },
+    "CKV_K8S_12": {
+        "rule_id": "CKV_K8S_12",
+        "rule_name": "Missing memory limits",
+        "description": "Containers without memory limits can consume excessive memory resources, potentially causing node instability or OOM (Out Of Memory) issues. It is recommended to define memory limits for all containers.",
+        "severity": "MEDIUM",
+        "category": "Security",
+        "resource_type": "kubernetes_pod"
     }
 }

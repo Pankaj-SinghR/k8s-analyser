@@ -31,6 +31,8 @@ func main() {
 			rule["CKV_K8S_8"],
 			rule["CKV_K8S_9"],
 			rule["CKV_K8S_10"],
+			rule["CKV_K8S_11"],
+			rule["CKV_K8S_12"],
 		},
 	}
 
